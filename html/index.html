@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>Google Voice</title>
+	
+	<!-- MIC RESOURCES -->
+	<!--<script defer type="text/javascript" src="../js/lib/adapter-latest.js"></script>-->
+	<!--
+        The following two lines are for loading the localisations library
+        and the localisation data-so people can use the app in their
+        own language (as long as you provide translations).
+    -->
+    <link type="application/l10n" href="data/locales.ini"/>
+    <script type="text/javascript" src="js/libs/l10n.js"></script>
+
+	<script type="text/javascript" src="../js/locale_content.js"></script>
+	<script type="text/javascript" src="../js/lib/sso.min.js"></script>
+	<script type="text/javascript" src="../js/lib/ssoToken.js"></script>
+	<script type="text/javascript" src="../js/lib/hark.bundle.js"></script>
+	<script type="text/javascript" src="../js/lib/speech-understanding.js"></script>
+	<script  type="text/javascript" src="../js/lib/recorder.js"></script>
+	
+	<!-- CONTACTS RESOURCES -->
+	<!--<script type="text/javascript" src="../js/contacts/custom-elements.js"></script>-->
+	<script  type="text/javascript" src="../js/contacts/namespace.js"></script>
+	<script  type="text/javascript" src="../js/contacts/contacts.js"></script>
+	 <!-- <script defer type="text/javascript" src="../js/contacts/contact-list.js"></script>
+	<script defer type="text/javascript" src="../js/contacts/contact-details.js"></script>  -->
+
+	<!-- SMS RESOURCES -->
+	<!--<script defer type="text/javascript" src="../js/sms/smsManager.js"></script>-->
+
+	<!-- OPEN APP -->
+	<script type="text/javascript" src="../js/apps/open-apps.js"></script>
+
+	<!-- MUSIC RESOURCES -->
+	<!--<script defer type="text/javascript" src="../js/lib/music.js"></script>-->
+	
+	<script defer type="text/javascript" src="../js/navbar/navigation-bar.js"></script>
+	<!-- PAGE RESOURCES -->
+
+	<!--Talkback resources-->
+	<script type="text/javascript" src="../js/lib/responsivevoice.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	
+
+</head>
+<body>
+	<!--<div class="app_load_outer" id="app_load">
+		<div class="app_load_inner">
+			<img src="../images/pngs/JioAssist_84.png"/>
+		</div>
+	</div>-->
+	<div class="container" id="container">
+		<div id="mic-holder" class="home-screen">
+			<google-mic tabindex="1"  primary-text="" secondary-text="" mkt=""></google-mic>
+			<img src="../images/gifs/processing.gif" id="processing-gif" style="display:none;"/>
+			<img src="../images/gifs/listening.gif" id="listening-gif" style="display:none;"/>
+		</div>
+		
+		
+		<div id="small-mic-holder" class="not-home-screen">
+			<div id="small-mic">
+				<img width="30px" height="30px" src="../images/icons/call.png" style="top:-6px">
+				<p data-l10n-id="select_contact"></p>
+			</div>
+		</div>
+
+		<div id="small-mic-msg" class="not-home-screen">
+			<div id="mic-msg">
+				<img width="30px" height="30px" src="../images/pngs/VA-42.png" style="top:5px">
+				<p id="record-msg"></p>
+			</div>
+		</div>
+
+		<div id="reactive-feedback-container">
+			<div id="quantitative-feedback">
+				<h3 class="feedback_title" data-l10n-id="rating"></h3>
+				<div class="ratitle-subtxt" data-l10n-id="rate_app"></div>
+				<ul class="rating-list">
+					<li><a id="1"><img src="../images/icons/rating-1.png"/></a></li>
+					<li><a id="2"><img src="../images/icons/rating-2.png"/></a></a></li>
+					<li class="active"><a id="3"><img src="../images/icons/rating-3.png"/></a></a></li>
+					<li><a id="4"><img src="../images/icons/rating-4.png"/></a></a></li>
+					<li><a id="5"><img src="../images/icons/rating-5.png"/></a></a></li>
+				</ul>
+				<div class="rating-help" data-l10n-id="rating_nav_help"></div>
+			</div>
+			<div id="qualitative-feedback">
+				<h3 class="feedback_title" data-l10n-id="feedback"></h3>
+				<div id="rating5" class="ratingComment">
+					<div id="rating-msg" class="rating-title" data-l10n-id="rating_five_title"></div>
+				</div>
+				<div id="rating3" class="ratingComment">
+					<div class="rating-title" data-l10n-id="rating_three_title" id="rating_3_msg"></div>
+					<div class="rating-title" data-l10n-id="rating_4_msg" id="rating_4_msg"></div>
+					<ul id="rating-option-list" class="rating-options-list"></ul>
+					<div data-l10n-id="other" id="other_comments"></div>
+				</div>
+				<textarea id="fedback-rating-text" name="Text1" cols="30" rows="3"></textarea>
+			</div>
+			<div id="comment_not_recorded">
+				<img src="../images/icons/alert.png"/>
+				<p id="comment_not_recorded_error"></p>
+			</div>
+			<div class="send_btn">
+				<button id="submit-feedback-btn" class="pull-left" data-l10n-id="submit"></button>
+				<button id="skip-feedback-btn" class="pull-right" data-l10n-id="skip"></button>
+				<button id="back-feedback-btn" class="pull-right" data-l10n-id="back"></button>
+				<div class="clearBoth"></div>
+			</div>
+		</div>
+
+		<div id="small-mic-feedback" class="not-home-screen">
+			<div id="mic-feedback">
+				<img width="30px" height="30px" src="../images/pngs/VA-42.png" style="top:5px">
+				<p id="record-feedback"></p>
+			</div>
+		</div>
+
+		<div id="small-mic-retry" class="not-home-screen">
+			<div id="mic-retry">
+				<!--<img width="30px" height="30px" src="../images/icons/retry.png" style="top:5px">-->
+				<p id="retry-msg"></p>
+			</div>
+		</div>
+
+		<div id="msg-sent">
+			<img src="../images/icons/messageSent.png"/>
+			<div data-l10n-id="message_sent"></div>
+		</div>
+		
+		<div id="nav-page" class="home-screen">
+			<h3 id="nav-title" data-l10n-id="suggest_title_menu"></h3>
+			<section>
+				<ul id="nav-page-list" tabindex="1">
+					<li tabindex="1" class="sample_ref active">
+						<div class="pull-left">
+							<img src="../images/icons/call-icon.png" class="help_text_icon"/>
+						</div>
+						<div class="icon pull-left">
+							<div class="suggest-title" data-l10n-id="suggest_title_call" id="suggest-title-call"></div>
+							<span class="help_text_msg" id="help_text_call" data-l10n-id="suggest_text_call"></span>
+						</div>
+						<div class="clearBoth"></div>
+					</li>
+					<li tabindex="2" class="sample_ref">
+						<div class="icon pull-left">
+							<img src="../images/icons/sms-icon.png" class="help_text_icon"/>
+						</div>
+						<div class="pull-left">
+							<div class="suggest-title" data-l10n-id="suggest_title_sms" id="suggest-title-sms"></div>
+							<span class="help_text_msg" id="help_text_sms" data-l10n-id="suggest_text_sms"></span>
+						</div>
+						<div class="clearBoth"></div>
+					</li>
+				</ul>
+			</section>
+		</div>
+
+		<div id="faq_page">
+			<section>
+				<h3 id="faq_title" data-l10n-id="faq_title_menu"></h3> 				
+				<ul id="faq-list" class="locales_list list reset-list">
+				</ul>
+				<br/><br/><br/><br/>
+				<div data-l10n-id="back" class="go_back_btn"></div>		
+			</section>
+		</div>
+
+		<div id="no-internet-page">	
+			<section>
+				<h5 data-l10n-id="internet_try_title"></h5>
+				<ul id="no-internet-list" tabindex="1">
+					<li tabindex="1" class="sample_ref">
+						1.<span class="help_text_msg" id="help_text_call" data-l10n-id="internet_data_wifi"></span>
+					</li>
+					<li tabindex="2" class="sample_ref">
+						2.<span class="help_text_msg" id="help_text_sms" data-l10n-id="internet_area"></span>
+					</li>
+					<li tabindex="3" class="sample_ref">
+						3.<span class="help_text_msg" id="help_text_sms" data-l10n-id="internet_airplane"></span>
+					</li>
+				</ul>
+			</section>
+		</div>
+
+		<div id="menu-options" class="home-screen">
+			<span tabindex="1" data-l10n-id="menu" id="menu" class="pull-left"></span>
+			<span tabindex="2" class="">
+				<img class='mic-icon-white' src='../../images/icons/voice.png' />
+			</span>
+			<span tabindex="3" data-l10n-id="language" data-str="hindi" id="hindiLanguageAnchor" class="pull-right"></span>
+		</div>
+
+		<div class="menu-page not-home-screen" id="menu-page">
+			<h3 data-l10n-id="menu"></h3>
+			<ul id="menu-list" tabindex="1">
+				<li tabindex="1" class="sample_ref active">
+					<span class="help_text_msg" id="menu-guide" data-l10n-id="guide"></span>
+				</li>
+				<li tabindex="2" class="sample_ref">
+					<span class="help_text_msg" id="faq" data-l10n-id="faq_title_menu"></span>
+				</li>
+				<li tabindex="3" class="sample_ref">
+					<span class="help_text_msg" id="feedback" data-l10n-id="feedback"></span>
+				</li>
+				<li tabindex="4" class="sample_ref">
+					<span class="help_text_msg" id="app-ver" data-l10n-id="app_version"></span>
+				</li>
+			</ul>
+		</div>
+
+		<div id="view-contacts" class="help-view not-home-screen">
+			<section class="contact-content">
+				<!-- <h3 id="contacts-header"></h3> -->
+				<ul id="contacts-list" class="list reset-list">
+				</ul>			
+			</section>
+		</div>
+
+		<div id="view-locales" class="not-home-screen">
+			<section>
+				<h3 id="set-locale-header" data-l10n-id="set_locale"></h3> 				
+				<ul id="locales-list" class="locales_list list reset-list">
+				</ul>
+				<div data-l10n-id="back" class="go_back_btn"></div>		
+			</section>
+		</div>
+
+		<div id="suggest-options" class="help-view not-home-screen">
+			<div id="nav-mic">
+				<div id="nav-mic-msg">
+					<div class="pull-left icon">
+						<img width="30px" height="30px" src="../images/pngs/VA-42.png">
+					</div>
+					<div class="pull-left">
+						<p id="nav-mic-voice"></p>
+					</div>
+					<div class="clearBoth"></div>
+				</div>
+			</div>
+			<h3 id="suggestion-title" data-l10n-id="suggest_title"></h3>
+			<h3 id="suggestion-title-menu" data-l10n-id="suggest_title_menu"></h3>
+			<ul class="suggest-options-list">
+				<li class="active">
+					<div class="icon pull-left">
+						<img src="../images/icons/call-icon.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_call" id="suggest-title-call"></div>
+						<div class="suggest-text" data-l10n-id="suggest_text_call" id="suggest-text-call"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+				<li>
+					<div class="icon pull-left">
+						<img src="../images/icons/sms-icon.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_sms" id="suggest-title-sms"></div>
+						<div class="suggest-text" data-l10n-id="suggest_text_sms" id="suggest-text-sms"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+				<li>
+					<div class="icon pull-left">
+						<img src="../images/icons/browser-icon.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_browser" id="suggest-title-browser"></div>
+						<div class="suggest-text" data-l10n-id="suggest_text_browser" id="suggest-text-browser"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+				<li>
+					<div class="icon pull-left">
+						<img src="../images/icons/JioMusic.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_jiomusic" id="suggest-title-jiomusic"></div>
+						<div class="suggest-text" data-l10n-id="suggest_text_jiomusic" id="suggest-text-jiomusic"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+				<li>
+					<div class="icon pull-left">
+						<img src="../images/icons/JioCinema.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_jiocinema" id="suggest-title-jiocinema"></div>
+						<div class="suggest-text" data-l10n-id="suggest_text_jiocinema" id="suggest-text-jiocinema"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+				<li>
+					<div class="icon pull-left">
+						<img src="../images/icons/JioTV.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_jiotv" id="suggest-title-jiotv"></div>
+						<div class="suggest-text"  data-l10n-id="suggest_text_jiotv"id="suggest-text-jiotv"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+				<li>
+					<div class="icon pull-left">
+						<img src="../images/icons/camera-icon.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_camera" id="suggest-title-camera"></div>
+						<div class="suggest-text" data-l10n-id="suggest_text_camera" id="suggest-text-camera"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+				<li>
+					<div class="icon pull-left">
+						<img src="../images/icons/settings-icon.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_settings" id="suggest-title-settings"></div>
+						<div class="suggest-text" data-l10n-id="suggest_text_settings" id="suggest-text-settings"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+				<li>
+					<div class="icon pull-left">
+						<img src="../images/icons/calendar-icon.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_calendar" id="suggest-title-calendar"></div>
+						<div class="suggest-text" data-l10n-id="suggest_text_calendar" id="suggest-text-calendar"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+				<li>
+					<div class="icon pull-left">
+						<img src="../images/icons/fmradio-icon.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_radio" id="suggest-title-radio"></div>
+						<div class="suggest-text" data-l10n-id="suggest_text_radio" id="suggest-text-radio"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+				<li>
+					<div class="icon pull-left">
+						<img src="../images/icons/alarm-radio.png"/>
+					</div>
+					<div class="suggest-content pull-left">
+						<div class="suggest-title" data-l10n-id="suggest_title_clock" id="suggest-title-clock"></div>
+						<div class="suggest-text" data-l10n-id="suggest_text_clock" id="suggest-text-clock"></div>
+					</div>
+					<div class="clearBoth"></div>
+				</li>
+			</ul>			
+		</div>
+	
+		<div id="send-sms" class="help-view">
+			<div id="send-msg-input">
+				<div class="send_to" data-l10n-id="TO"> <span id="to-sms"></span> <span id="phone-number"></span></div>
+				<textarea id="sms-text" name="Text1" cols="30" rows="3" onfocus="this.value = this.value;"></textarea>
+				<div id="msg_not_recorded">
+					<img src="../images/icons/alert.png"/>
+					<p id="msg_not_recorded_error"></p>
+				</div>
+				<div class="send_btn">
+					<button id="send-sms-btn" class="pull-left" data-l10n-id="Send"></button>
+					<button id="back-btn-sms" class="pull-right" data-l10n-id="back"></button>
+					<div class="clearBoth"></div>
+				</div>
+				
+			</div>
+		</div>
+
+		<div id="send-feedback" class="help-view">
+			<div id="send-feedback-input">
+				<div class="send_to" data-l10n-id="feeback_comment"></div>
+				<textarea id="feedback-text" name="Text2" cols="30" rows="3" onfocus="this.value = this.value;"></textarea>
+				<div id="feedback_not_recorded">
+					<img src="../images/icons/alert.png"/>
+					<p id="feedback_not_recorded_error"></p>
+				</div>
+				<div class="send_btn">
+					<button id="submit-feedback-btn" class="pull-left" data-l10n-id="submit"></button>
+					<button id="back-btn-feedback" class="pull-right" data-l10n-id="back"></button>
+					<div class="clearBoth"></div>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div id="battery" class="help-view not-home-screen">
+			<div id="batteryIcon">
+				<img id="imgPadding" width="50px" height="50px" src="../images/pngs/battery.png">
+				<div>
+					<span id="batteryPercnt"></span>
+				</div>
+				<p data-l10n-id="press_*_to_activate_voice"></p>
+			</div>
+		</div>
+		<div id="get-speech"></div>
+	</div>
+	
+	<table class="bottomFixedBar tableFullWidth not-home-screen" id="back-btn">
+       <tr>
+          <td class="d3" data-l10n-id="back"></td>
+       </tr>
+    </table>
+	<table class="bottomFixedBar tableFullWidth not-home-screen" id="cancel-btn">
+       <tr>
+          <td class="d1" data-l10n-id="cancel"></td>
+       </tr>
+    </table>
+	<a id="link">click</a>
+	<script  type="text/javascript" src="../js/index.js"></script>
+
+</body>
+</html>

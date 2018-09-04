@@ -1,0 +1,145 @@
+{
+  "name": "HelloJio",
+  "version": "1.3.5",
+  "display": "HelloJio",
+  "launch_path": "/html/index.html",
+  "theme": "#f7ab20",
+  "description": "HelloJio not only helps you use your voice to do your calling, messaging  and internet search, but it also specifically lets you choose programmes on JioTV and helps you watch the latest movies on Jio Cinema. What’s more. You can specifically name a movie or song and HelloJio will play it for you in seconds.",
+  "type": "certified",
+  "origin": "app://hellojio.jio.com",
+  "subtitle": "Say goodbye to touch and type with HelloJio using your voice",
+  "icons": {
+    "56": "/images/pngs/JioAssist_56.png",
+    "84": "/images/pngs/JioAssist_84.png"
+  },
+  "developer": {
+    "name": "Jio Media Team",
+    "url": "http://jio.com"
+  },
+  "default_locale": "en-US",
+  "locales": {
+    "en-US": {
+      "name": "HelloJio",
+      "description": "HelloJio not only helps you use your voice to do your calling, messaging  and internet search, but it also specifically lets you choose programmes on JioTV and helps you watch the latest movies on Jio Cinema. What’s more. You can specifically name a movie or song and HelloJio will play it for you in seconds.",
+      "subtitle": "Say goodbye to touch and type with HelloJio using your voice"
+    },
+    "hi-IN": {
+      "name": "हेलोजिओ"
+    },
+    "gu-IN": {
+      "name": "હેલોજીઓ"
+    },
+    "mr-IN": {
+      "name": "हेलोजीओ"
+    },
+    "bn-IN": {
+      "name": "হেলোজিও"
+    },
+    "pa-IN": {
+      "name": "ਹੇਲੋਜਿਓ"
+    },
+    "kn-IN": {
+      "name": "ಹೆಲೋಜಿಒ"
+    },
+    "ta-IN": {
+      "name": "ஹெலோஜிோ"
+    },
+    "te-IN": {
+      "name": "హెల్లొజీఓ"
+    },
+    "ml-IN": {
+      "name": "ഹെലോജ്ി"
+    },
+    "as-IN": {
+      "name": "হ্যালোজিও"
+    },
+    "or-IN": {
+      "name": "ହେଲଲଜିଓ"
+    },
+    "doi-IN": {
+      "name": "हॅलोजीव"
+    },
+    "kok-IN": {
+      "name": "हॅलोजीव"
+    },
+    "sat-IN": {
+      "name": "ᱡᱤᱭᱳ"
+    },
+    "sa-IN": {
+      "name": "हेल्लोझिओ"
+    },
+    "sd-IN": {
+      "name": "هالو جيه"
+    },
+    "mai-IN": {
+      "name": "हेलोजिओ"
+    },
+    "mni-IN": {
+      "name": "হেলোজিও"
+    },
+    "und-bod": {
+      "name": "हेलोजिओ "
+    },
+    "ne-IN": {
+      "name": "हेल्लोजिओ"
+    },
+    "ur-IN": {
+      "name": "ہیلوجیو"
+    },
+    "ks-IN": {
+      "name": "ہیلو جو "
+    }
+  },
+  "datastores-access": {
+        "jio_service_store": {
+          "access": "readonly",
+          "description":"Jio Service store"
+        }
+    },
+  "permissions": {
+    "contacts": {
+      "access": "readwrite",
+      "description": "Required for contact viewer app"
+    },
+    "device-storage:music": {
+      "access": "readwrite"
+    },
+    "device-storage:videos": {
+      "access": "readonly"
+    },
+    "device-storage:sdcard": {
+      "access": "readwrite"
+    },
+    "device-storage:apps": {
+      "access": "readwrite"
+    },
+    "geolocation": {
+      "description": "Obtain geolocation from the device GPS."
+    },
+	 "persistent-storage": {},
+    "mobileconnection":{},
+    "volumemanager":{},
+    "settings":{"access":"readwrite"},
+    "wifi-manage":{},
+    "systemXHR": {},
+    "audio-capture": {},
+	  "audio-channel-content": {},
+    "telephony": {},
+    "sms": {},
+    "webapps-manage": {},
+    "audio-channel-content": {},
+    "settings":{
+      "access":"readwrite"
+    },
+    "wifi-manage":{}
+  },
+  "fullscreen": true,
+  "activities": {
+    "JioAssist": {
+      "href": "/html/index.html",
+      "disposition": "window",
+      "filters": {},
+      "returnValue": true
+    }
+  }
+}
